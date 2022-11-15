@@ -14,7 +14,7 @@ export class ProductsService {
   }
 
   async getUserProductById(_id: string, user: any) {
-    return await this.productModel.find({ _id, email: user.username });
+    return await this.productModel.findOne({ _id, email: user.username });
   }
 
   async createProduct(productToCreate: CreateProductDto, user: any) {
