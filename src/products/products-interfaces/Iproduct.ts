@@ -1,7 +1,7 @@
 import { Document } from 'mongoose';
 export interface Iproduct extends Document {
-  id?: string,
+  id: string,
   name: string,
   price: number,
-  owner?: string
+  owner: string,
 }

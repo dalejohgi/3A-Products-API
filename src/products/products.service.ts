@@ -10,33 +10,40 @@ export class ProductsService {
   constructor(@InjectModel('Product') private productModel: Model<Iproduct>) {}
 
   async getAllUserProducts(user: any) {
-    console.log(user)
-    return await this.productModel.find({owner: user.username});
+    return await this.productModel.find({ owner: user.username });
   }
 
   async getUserProductById(_id: string, user: any) {
-    return await this.productModel.find({_id, email: user.username });
+    return await this.productModel.find({ _id, email: user.username });
   }
 
   async createProduct(productToCreate: CreateProductDto, user: any) {
-    const newProduct = new this.productModel({...productToCreate, owner: user.username});
+    const newProduct = new this.productModel({
+      ...productToCreate,
+      owner: user.username,
+    });
     return await newProduct.save();
   }
 
-  async updateProduct(_id: string, productUpdates: UpdateProductDto, user: any) {
-    const productToBeUpdated = await this.productModel.find({ _id });
-    // if (!productToBeUpdated || productToBeUpdated.owner !== user.username) {
-    //   return 'Product to update doesn\'t exist in the user account'
-    // }
-    console.log(productToBeUpdated, typeof(productToBeUpdated))
-    return await this.productModel.findOneAndUpdate({ _id }, productUpdates);
+  async updateProduct(
+    _id: string,
+    productUpdates: UpdateProductDto,
+    user: any,
+  ) {
+    const productToBeUpdated = await this.productModel.findOne({ _id });
+    if (!productToBeUpdated || productToBeUpdated.owner !== user.username) {
+      return "Product to update doesn't exist in the user account";
+    }
+    return await this.productModel.findOneAndUpdate({ _id }, productUpdates, {
+      new: true,
+    });
   }
 
   async deleteProduct(_id: string, user: any) {
-    const productToDeleted = await this.productModel.find({ _id });
-    // if (!productToDeleted || productToDeleted.owner !== user.username) {
-    //   return 'Product to delete doesn\'t exist in the user account'
-    // }
-    return await this.productModel.findOneAndDelete({_id})
+    const productToDeleted = await this.productModel.findOne({ _id });
+    if (!productToDeleted || productToDeleted.owner !== user.username) {
+      return "Product to delete doesn't exist in the user account";
+    }
+    return await this.productModel.findOneAndDelete({ _id });
   }
 }
