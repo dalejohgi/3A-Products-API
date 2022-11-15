@@ -1,0 +1,35 @@
+paths:
+  /products:
+    get:
+      tags:
+        - Products
+      operationId: list
+      summary: Retrieve all user products
+      description: 'Return a list of all user products.'
+
+      responses:
+        200:
+          description: Operation success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    example: '63731dea3ba869075442e234'
+                  name:
+                    type: string
+                    example: 'Torta de chocolate'
+                  owner: 
+                    type: string
+                    example: 'dummyEmail@mail.com'
+                  __v: 
+                    type: integer
+                    example: 0
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        500:
+          $ref: '#/components/responses/ServerError'

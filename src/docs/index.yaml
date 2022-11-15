@@ -1,0 +1,22 @@
+openapi: 3.0.0
+info:
+  title: 3A Technical Test - Products API
+  description: Api to manage products
+  version: 1.0.0
+  contact:
+    name: David Hincapie
+    email: dalejohgi.tech@gmail.com
+
+servers:
+  - url: http://localhost:3000
+    description: Development server
+
+components:
+
+  responses:
+    BadRequest:
+      description: Bad request
+    Unauthorized:
+      description: Unauthorized to perform this request
+    ServerError: 
+      description: Internal server error
